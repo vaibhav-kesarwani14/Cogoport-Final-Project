@@ -14,10 +14,22 @@ import os
 from peewee import*
 import bcrypt
 import json
+from fastapi.middleware.cors import CORSMiddleware
 
 time_zone = pytz.timezone('Asia/Kolkata')
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 templates = Jinja2Templates(directory="templates")
 
 db = peewee.SqliteDatabase("final_data.db")
