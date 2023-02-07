@@ -82,7 +82,11 @@ create_tables()
 # Category.create(category_name = 'Product')
 # Category.create(category_name  ='Software Engineering')
 # Category.create(category_name  ='Customer Service')
-# Article.create(category_name='Design', title='Testing', thumbnail='dummy', text='dumyyedhsgerghrwhearhrwhgaehae', short_description='kuch ni h')
+# Article.create(category_name='Software Development', title='Testing2', thumbnail='dummy', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='xwxoirh ekjt ekjt')
+# Article.create(category_name='Software Development', title='Testing3', thumbnail='dummy', text='xkejgrd ectkgr  wxsr ct dct e chqrw crher htcytc rgvb5cryd tsbexe j gfkt eckdj cjkc rkc c dtc ec t cek', short_description='kekjvf ejhe ck ejhvew crjwhvcrw cnmr')
+# Article.create(category_name='Leadership', title='Testing4', thumbnail='dummy', text='xkjsfkebrjx reerr cethk crygjcbdfhcs erfsdfbdhrycd gfgdhvytegcfd ghvtcrf ewhk tew ec hktc t', short_description='ckjtvg etecbtewtwtewctweccc rheceytchgretrc ')
+# Article.create(category_name='Management', title='Testing5', thumbnail='dummy', text='xskjgfsevrkegwuitcd fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjkhtv cejkdtvce bjhketcew tjh ct met c')
+# Article.create(category_name='Leadership', title='Testing6', thumbnail='dummy', text='cs cd vrhv v v fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjcdtev yrd vdvtveyv rkhtv cejkdtvce bjhketcew tjh ct met c')
 
 # Display category by Category Name
 
@@ -118,7 +122,7 @@ def get_single_article(id : int):
         "text": article.text
     }
     
-#Create Article
+#Create New Article
 
 @app.post("/create_article")
 async def create_post(request: Request):
