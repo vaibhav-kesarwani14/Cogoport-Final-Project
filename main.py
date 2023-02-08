@@ -72,7 +72,6 @@ class Article(peewee.Model):
 class Like_Table(peewee.Model):
     user_info_like = peewee.ForeignKeyField(User, to_field='username')
     article_id = peewee.ForeignKeyField(Article, to_field='id')
-    
 
     class Meta:
         database = db
@@ -181,13 +180,13 @@ async def get_user_posts(category_name : str):
 
 #articles of an user
 
-# @app.get("/articles/{username}")
-# async def get_user_posts(username : str):
+@app.get("/articles_by_id/{username}")
+async def get_user_posts(username : str):
         
-#         articles = Article.select().where(Article.username == username)
-#         if len(articles) == 0:
-#             return {"User Not Found"}
-#         return [model_to_dict(user_articles) for user_articles in articles]
+        articles = Article.select().where(Article.username == username)
+        if len(articles) == 0:
+            return {"User Not Found"}
+        return [model_to_dict(user_articles) for user_articles in articles]
 
 
 #Display Article By Id
@@ -201,7 +200,7 @@ def get_single_article(id : int):
         "profile_pic":article.username.profile_pic,
         "title": article.title,
         "short_description": article.short_description,
-        "category" : article.category_name,
+        "category" : article.category_name.category_name,
         "username": article.username,
         "thumbnail" : article.thumbnail,
         "text": article.text,
@@ -216,8 +215,6 @@ async def func(x : str):
     for i in k:
         a.append(i.name)
     return a
-    
-#Create New Article
 
 #Create New Article
 
