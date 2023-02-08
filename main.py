@@ -148,7 +148,8 @@ def get_single_article(id : int):
         "category" : article.category_name,
         "user_info": article.username,
         "thumbnail" : article.thumbnail,
-        "text": article.text
+        "text": article.text,
+        "time": article.created_at
     }
     
 #Create New Article
