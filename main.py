@@ -84,11 +84,11 @@ create_tables()
 # Category.create(category_name  ='Software Engineering')
 # Category.create(category_name  ='Customer Service')
 
-User.create(username = "Vaibhav", password="1234", email = "vaibhav@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
-User.create(username = "Sanjuli", password="1234", email = "sanjuli@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
-User.create(username = "Anand", password="1234", email = "Anand@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
+# User.create(username = "Vaibhav", password="1234", email = "vaibhav@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
+# User.create(username = "Sanjuli", password="1234", email = "sanjuli@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
+# User.create(username = "Anand", password="1234", email = "Anand@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
 
-Article.create(username = 'Vaibhav', category_name ='Design', title='The Future of UI/UX Design: Trends and Best Practices for 2023', thumbnail='https://example.com/images/uiuxdesign.jpg', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='A comprehensive guide to the future of UI/UX design, including the latest trends and best practices for the upcoming year.')
+# Article.create(username = 'Vaibhav', category_name ='Design', title='The Future of UI/UX Design: Trends and Best Practices for 2023', thumbnail='https://example.com/images/uiuxdesign.jpg', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='A comprehensive guide to the future of UI/UX design, including the latest trends and best practices for the upcoming year.')
 
 # Article.create(username = 'vaibhav', category_name ='Software Engineering', title='Testing2', thumbnail='dummy', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='xwxoirh ekjt ekjt')
 # Article.create(username = 'ajay', category_name ='Software Engineering', title='Testing3', thumbnail='dummy', text='xkejgrd ectkgr  wxsr ct dct e chqrw crher htcytc rgvb5cryd tsbexe j gfkt eckdj cjkc rkc c dtc ec t cek', short_description='kekjvf ejhe ck ejhvew crjwhvcrw cnmr')
@@ -130,7 +130,10 @@ def get_single_article(id : int):
     # single_article = Article.get(Article.id == id)
     return {
         "title": article.title,
-        
+        "short-description": article.short_description,
+        "category" : article.category,
+        "user_info": article.username,
+        "thumbnail" : article.thumbnail,
         "text": article.text
     }
     
