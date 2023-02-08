@@ -112,7 +112,7 @@ async def get_user_posts(category_name : str):
 @app.get("/articles/")
 def get_articles():
     articles = Article.select()
-    return [{"user_info": article.username,"id": article.id, "title": article.title ,"description": article.short_description} for  article in articles]
+    return [{"user_info": article.username,"id": article.id, "title": article.title ,"description": article.short_description, "time":article.created_at} for  article in articles]
     # return [model_to_dict(article) for article in articles]
 
 #Display Article By Id
