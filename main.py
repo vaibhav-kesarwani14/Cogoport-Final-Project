@@ -132,7 +132,7 @@ async def get_user_posts(category_name : str):
 @app.get("/articles/")
 def get_articles():
     articles = Article.select()
-    return [{"user_info": article.username,"id": article.id, "title": article.title ,"description": article.short_description, "time":article.created_at, "thumbnail":article.thumbnail, "category":article.category_name} for  article in articles]
+    return [{"user_info": article.username.username,"id": article.id, "title": article.title ,"description": article.short_description, "time":article.created_at, "thumbnail":article.thumbnail, "category":article.category_name} for  article in articles]
     # return [model_to_dict(article) for article in articles]
 
 #Display Article By Id
@@ -142,6 +142,7 @@ def get_single_article(id : int):
     article = Article.select().where(Article.id == id).first()
     # single_article = Article.get(Article.id == id)
     return {
+        "username": article.username.username,
         "title": article.title,
         "short_description": article.short_description,
         "category" : article.category_name,
