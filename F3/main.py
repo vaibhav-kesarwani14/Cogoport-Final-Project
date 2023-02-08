@@ -40,10 +40,10 @@ class BaseModel(Model):
 
 
 class User(BaseModel):
-    username = CharField(unique=True)
+    username = CharField(primary_key=True)
     email = CharField()
     password = CharField()
-    profile_image_url = CharField()
+    profile_pic = CharField()
 
 class Authentication(BaseModel):
     user = ForeignKeyField(User, backref="authentications")
@@ -58,6 +58,7 @@ class Category(peewee.Model):
 class Article(peewee.Model):
     # user_info = peewee.ForeignKeyField(User, to_field='username')
     category_name = peewee.ForeignKeyField(Category, to_field='category_name')
+    username = ForeignKeyField(User, to_field='username', backref='author_name')
     title = peewee.CharField()
     thumbnail = peewee.CharField()
     created_at = peewee.DateTimeField(default = datetime.datetime.now(time_zone).strftime("%Y-%m-%d %H: %M:%S"))
@@ -128,6 +129,7 @@ def get_single_article(id : int):
 async def create_post(request: Request):
     request_data = await request.json()
     # token = request.headers.get("Authorization")
+    username = request_data.get("username")
     title = request_data.get("title")
     text = request_data.get("text")
     category_name = request_data.get("category_name")
@@ -145,6 +147,7 @@ async def create_post(request: Request):
     try:
         new_article = Article.create(
             title=title,
+            username = username,
             text=text,
             category_name=category_name,
             short_description = short_description,
@@ -190,53 +193,70 @@ async def deleteArticle(id):
 #Sign in API
 
 @app.post("/login")
-async def login(username, password):
+async def login(request: Request):
+    req = await request.json()
+    username = req.get('username')
+    password = req.get('password')
     
     try:
         user = User.get(User.username == username)
-
         bytes = password.encode('utf-8')
-        
-        salt = bcrypt.gensalt()
-        
+        salt = bcrypt.gensalt() 
         hash = bcrypt.hashpw(bytes, salt)
 
         if User.password == hash:
             token = str(uuid.uuid4())
-            Authentication.create(user=user, token=token)
+            auth = Authentication.get(Authentication.user_id == user.username)
+            auth.token = token
+            auth.save()
             return {"message": "Login successful", "token": token}
         else:
-            raise HTTPException(status_code=400, detail="Incorrect password")
+            return {'message': 'Invalid Credentials'}
     except User.DoesNotExist:
-        raise HTTPException(status_code=400, detail="Username not found")
+        return {'message': 'Username not found'}
 
 
 #Sign Up API
 
-@app.post("/sign-up")
-# async def register(username, email, password):
+@app.post("/register")
 async def register(request: Request):
+    req = await request.json()
+    username = req.get('username')
+    password = req.get('password')
+    email = req.get('email')
+    profile_pic = req.get('profile_pic')
 
-    request_data = await request.json()
-    
-    password = request_data.get("password")
-    username = request_data.get("username")
-    email = request_data.get("email")
     
     bytes = password.encode('utf-8')
-        
     salt = bcrypt.gensalt()
     
     hash = bcrypt.hashpw(bytes, salt)
 
     try:
-        new_user = User.create(username = username, email = email, password = hash)
+        new_user = User.create(username=username, email=email, password=hash, profile_pic=profile_pic)
+        new_user.save()
     except peewee.IntegrityError:
-        raise HTTPException(
-            status_code=400, detail="Username already registered")
+        return {'message': 'Username already exists'}
 
     token = str(uuid.uuid4())
-    Authentication.create(user=new_user, token=token)
+    Authentication.create(user_id=new_user.username, token=token)
     return {"message": "User registered", "token": token}
 
+# @app.get("/search/{username}")
+
+# async def search_by_author(request : Request):
+#     request_data = request.json()
+
+#     username = request_data.get("username")
+
+#     try:
+#         user = User.get(User.username == username)
+#     except User.DoesNotExist:
+#         raise HTTPException(status_code=400, detail="Author not found")
+    
+#     author = User.select().where(User.username == username)
+#     category_articles = [{"category_name": article.title, "description": article.text} for article in articles]
+    
+    
+#     return [model_to_dict(article) for article in articles]
 
