@@ -83,10 +83,17 @@ create_tables()
 # Category.create(category_name = 'Product')
 # Category.create(category_name  ='Software Engineering')
 # Category.create(category_name  ='Customer Service')
+
+User.create(username = "Vaibhav", password="1234", email = "vaibhav@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
+User.create(username = "Sanjuli", password="1234", email = "sanjuli@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
+User.create(username = "Anand", password="1234", email = "Anand@gmail.com", profile_pic= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkfvQFaMNLPNbjDrlUTv-F3w-S_EC_fjnlxIEJDks&s")
+
+Article.create(username = 'Vaibhav', category_name ='Design', title='The Future of UI/UX Design: Trends and Best Practices for 2023', thumbnail='https://example.com/images/uiuxdesign.jpg', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='A comprehensive guide to the future of UI/UX design, including the latest trends and best practices for the upcoming year.')
+
 # Article.create(username = 'vaibhav', category_name ='Software Engineering', title='Testing2', thumbnail='dummy', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='xwxoirh ekjt ekjt')
 # Article.create(username = 'ajay', category_name ='Software Engineering', title='Testing3', thumbnail='dummy', text='xkejgrd ectkgr  wxsr ct dct e chqrw crher htcytc rgvb5cryd tsbexe j gfkt eckdj cjkc rkc c dtc ec t cek', short_description='kekjvf ejhe ck ejhvew crjwhvcrw cnmr')
 # Article.create(username = 'sanjuli', category_name ='Design', title='Testing4', thumbnail='dummy', text='xkjsfkebrjx reerr cethk crygjcbdfhcs erfsdfbdhrycd gfgdhvytegcfd ghvtcrf ewhk tew ec hktc t', short_description='ckjtvg etecbtewtwtewctweccc rheceytchgretrc ')
-# Article.create(username = 'vaibhav', category_name ='Product', title='Testing5', thumbnail='dummy', text='xskjgfsevrkegwuitcd fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjkhtv cejkdtvce bjhketcew tjh ct met c')
+# Article.create(username = 'vaibhav', category_name ='Product', title='Testing5', thumbnail='dummy', text='UI/UX design has been evolving rapidly over the past few years and with new technologies emerging, it's important for designers to stay updated on the latest trends and best practices. Here's what we can expect to see in 2023 and beyond: Artificial Intelligence (AI) and Machine Learning (ML) - With advancements in AI and ML, we can expect to see more personalized and intuitive design experiences. This can range from personalized product recommendations to chatbots that can handle customer service inquiries. Motion design - Motion design has been gaining popularity in recent years and this trend is expected to continue. The use of animations and micro-interactions will make user interfaces more engaging and user-friendly.', short_description='xcjkhtv cejkdtvce bjhketcew tjh ct met c')
 # Article.create(username = 'aman', category_name ='Customer Service', title='Testing6', thumbnail='dummy', text='cs cd vrhv v v fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjcdtev yrd vdvtveyv rkhtv cejkdtvce bjhketcew tjh ct met c')
 # Article.create(username = 'aman', category_name ='Product', title='Product Launch', thumbnail='dummy', text='Creating and distributing a press release for your upcoming launch is essential because it can help you: Spread the word about your new product. Create a buzz around your brand and increase brand awareness Drive more sales. Let’s look at these benefits in detail and discover more reasons why you should get a well-structured pitch in place. So, here’s how a product launch press release can help your business: Efficiently share key product details with consumers and stakeholders. A press release is an easy way to communicate effectively with the business environment you operate in. Pitching to publishers focused on your niche will facilitate an easy way to convey essential product information to customers, industry experts, and stakeholders. Author’s Tip: Choose your publisher, blogger, or influencer wisely! According to Fractl, 80% of publishers say that relevancy in their beat is an important criterion for accepting or declining a pitch. If you don’t know how to pick the right publisher for your company’s news release, you can always search for a press release distribution service provider.', short_description='Having a Product Launch Press Release')
 # Article.create(username = 'aman', category_name ='Design', title='Testing6', thumbnail='dummy', text='cs cd vrhv v v fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjcdtev yrd vdvtveyv rkhtv cejkdtvce bjhketcew tjh ct met c')
@@ -123,6 +130,7 @@ def get_single_article(id : int):
     # single_article = Article.get(Article.id == id)
     return {
         "title": article.title,
+        
         "text": article.text
     }
     
