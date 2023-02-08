@@ -50,7 +50,7 @@ class Authentication(BaseModel):
     token = CharField()
 
 class Category(peewee.Model):
-    category_name = peewee.CharField()
+    category_name = peewee.CharField(unique=True)
 
     class Meta:
         database = db
@@ -83,11 +83,14 @@ create_tables()
 # Category.create(category_name = 'Product')
 # Category.create(category_name  ='Software Engineering')
 # Category.create(category_name  ='Customer Service')
-# Article.create(category_name='Software Development', title='Testing2', thumbnail='dummy', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='xwxoirh ekjt ekjt')
-# Article.create(category_name='Software Development', title='Testing3', thumbnail='dummy', text='xkejgrd ectkgr  wxsr ct dct e chqrw crher htcytc rgvb5cryd tsbexe j gfkt eckdj cjkc rkc c dtc ec t cek', short_description='kekjvf ejhe ck ejhvew crjwhvcrw cnmr')
-# Article.create(category_name='Leadership', title='Testing4', thumbnail='dummy', text='xkjsfkebrjx reerr cethk crygjcbdfhcs erfsdfbdhrycd gfgdhvytegcfd ghvtcrf ewhk tew ec hktc t', short_description='ckjtvg etecbtewtwtewctweccc rheceytchgretrc ')
-# Article.create(category_name='Management', title='Testing5', thumbnail='dummy', text='xskjgfsevrkegwuitcd fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjkhtv cejkdtvce bjhketcew tjh ct met c')
-# Article.create(category_name='Leadership', title='Testing6', thumbnail='dummy', text='cs cd vrhv v v fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjcdtev yrd vdvtveyv rkhtv cejkdtvce bjhketcew tjh ct met c')
+# Article.create(username = 'vaibhav', category_name ='Software Engineering', title='Testing2', thumbnail='dummy', text='wrkecguc rwkg crekj ekckrjwccekt cecekjbt e tkce wtmnrw kctwcc,msdkxsrlkbckt cej cce t', short_description='xwxoirh ekjt ekjt')
+# Article.create(username = 'ajay', category_name ='Software Engineering', title='Testing3', thumbnail='dummy', text='xkejgrd ectkgr  wxsr ct dct e chqrw crher htcytc rgvb5cryd tsbexe j gfkt eckdj cjkc rkc c dtc ec t cek', short_description='kekjvf ejhe ck ejhvew crjwhvcrw cnmr')
+# Article.create(username = 'sanjuli', category_name ='Design', title='Testing4', thumbnail='dummy', text='xkjsfkebrjx reerr cethk crygjcbdfhcs erfsdfbdhrycd gfgdhvytegcfd ghvtcrf ewhk tew ec hktc t', short_description='ckjtvg etecbtewtwtewctweccc rheceytchgretrc ')
+# Article.create(username = 'vaibhav', category_name ='Product', title='Testing5', thumbnail='dummy', text='xskjgfsevrkegwuitcd fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjkhtv cejkdtvce bjhketcew tjh ct met c')
+# Article.create(username = 'aman', category_name ='Customer Service', title='Testing6', thumbnail='dummy', text='cs cd vrhv v v fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjcdtev yrd vdvtveyv rkhtv cejkdtvce bjhketcew tjh ct met c')
+# Article.create(username = 'aman', category_name ='Product', title='Product Launch', thumbnail='dummy', text='Creating and distributing a press release for your upcoming launch is essential because it can help you: Spread the word about your new product. Create a buzz around your brand and increase brand awareness Drive more sales. Let’s look at these benefits in detail and discover more reasons why you should get a well-structured pitch in place. So, here’s how a product launch press release can help your business: Efficiently share key product details with consumers and stakeholders. A press release is an easy way to communicate effectively with the business environment you operate in. Pitching to publishers focused on your niche will facilitate an easy way to convey essential product information to customers, industry experts, and stakeholders. Author’s Tip: Choose your publisher, blogger, or influencer wisely! According to Fractl, 80% of publishers say that relevancy in their beat is an important criterion for accepting or declining a pitch. If you don’t know how to pick the right publisher for your company’s news release, you can always search for a press release distribution service provider.', short_description='Having a Product Launch Press Release')
+# Article.create(username = 'aman', category_name ='Design', title='Testing6', thumbnail='dummy', text='cs cd vrhv v v fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjcdtev yrd vdvtveyv rkhtv cejkdtvce bjhketcew tjh ct met c')
+# Article.create(username = 'aman', category_name ='Design', title='Testing6', thumbnail='dummy', text='cs cd vrhv v v fsdtegfdhrterdffbd gsewffbgd fdff gdfce ewkjt ce tcehwktcewr ct ewkj', short_description='xcjcdtev yrd vdvtveyv rkhtv cejkdtvce bjhketcew tjh ct met c')
 
 # Display category by Category Name
 
@@ -109,12 +112,12 @@ async def get_user_posts(category_name : str):
 @app.get("/articles/")
 def get_articles():
     articles = Article.select()
-    return [{"id": article.id, "title": article.title ,"description": article.short_description} for  article in articles]
+    return [{"user_info": article.username,"id": article.id, "title": article.title ,"description": article.short_description} for  article in articles]
     # return [model_to_dict(article) for article in articles]
 
 #Display Article By Id
 
-@app.get("/article/{id}")
+@app.get("/articles/{id}")
 def get_single_article(id : int):
     article = Article.select().where(Article.id == id).first()
     # single_article = Article.get(Article.id == id)
@@ -237,10 +240,10 @@ async def register(request: Request):
         new_user.save()
     except peewee.IntegrityError:
         return {'message': 'Username already exists'}
-
     token = str(uuid.uuid4())
     Authentication.create(user_id=new_user.username, token=token)
     return {"message": "User registered", "token": token}
+
 
 # @app.get("/search/{username}")
 
