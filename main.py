@@ -130,8 +130,8 @@ def get_single_article(id : int):
     # single_article = Article.get(Article.id == id)
     return {
         "title": article.title,
-        "short-description": article.short_description,
-        "category" : article.category,
+        "short_description": article.short_description,
+        "category" : article.category_name,
         "user_info": article.username,
         "thumbnail" : article.thumbnail,
         "text": article.text
